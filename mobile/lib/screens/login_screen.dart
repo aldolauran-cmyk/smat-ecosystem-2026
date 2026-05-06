@@ -30,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             TextField(controller: _userController, decoration: InputDecoration(labelText: "Usuario")),
             TextField(controller: _passController, decoration: InputDecoration(labelText: "Clave"), obscureText: true),
+            SizedBox(height: 20),
             ElevatedButton(onPressed: _entrar, child: Text("Ingresar"))
           ],
         ),
