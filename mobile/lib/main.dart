@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
-import 'services/auth_service.dart';
 import 'screens/login_screen.dart';
 import 'screens/home_page.dart';
+import 'services/auth_service.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final String? token = await AuthService().getToken();
+void main() => runApp(const SMATApp());
 
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: token != null ? HomePage() : LoginScreen(),
-  ));
+class SMATApp extends StatelessWidget {
+  const SMATApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: FutureBuilder(
+        future: AuthService().getToken(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(body: Center(child: CircularProgressIndicator()));
+          }
+          if (snapshot.hasData && snapshot.data != null) {
+            return const HomePage();
+          }
+          return const LoginScreen();
+        },
+      ),
+    );
+  }
 }

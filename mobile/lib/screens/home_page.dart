@@ -4,25 +4,27 @@ import 'login_screen.dart';
 import 'add_estacion.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Estaciones SMAT"),
+        title: const Text('Estaciones SMAT'),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () async {
-              await AuthService().logout(); // Borra el token
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+              await AuthService().logout();
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
             },
           )
         ],
       ),
-      body: Center(child: Text("Bienvenido al Ecosistema SMAT")),
+      body: const Center(child: Text('Dashboard SMAT Activo')),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddEstacionScreen())),
-        child: Icon(Icons.add),
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEstacionScreen())),
+        child: const Icon(Icons.add),
       ),
     );
   }
